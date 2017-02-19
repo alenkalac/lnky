@@ -2,6 +2,12 @@
     "require": {
         "silex/silex": "^2.0",
         "twig/twig": "^1.31",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "twbs/bootstrap": "4.0.0-alpha.6"
+    },
+    "scripts": {
+    	"post-update-cmd": [
+    		"cp -R vendor/twbs/bootstrap/dist public_html/bootstrap"
+    	]
     }
 }

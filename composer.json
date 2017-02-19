@@ -7,7 +7,7 @@
     },
     "scripts": {
     	"post-update-cmd": [
-    		"cp -R vendor/twbs/bootstrap/dist public_html/bootstrap"
+    		"cp -R vendor/twbs/bootstrap/dist public_html/plugins/bootstrap"
     	]
     }
 }

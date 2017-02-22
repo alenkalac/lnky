@@ -1,14 +1,4 @@
 <?php 
-	$app->get('/', function() use($app) {
-		$uid = uniqid();
-		die($uid );
-		return $app['twig']->render('index.html.twig', []);
-	});
+	$app->get('/', 'lnky\MainController::indexPage')->bind("index");
 
-	$app->get("/{id}", function ($id) use ($app) {
-
-		$uid = uniqid();
-		echo $uid;
-		die();
-
-	});
+	$app->get('/{id}', 'lnky\MainController::redirectPage');

@@ -9,5 +9,10 @@
     	"post-update-cmd": [
     		"cp -R vendor/twbs/bootstrap/dist public_html/plugins/bootstrap"
     	]
+    },
+    "autoload": {
+        "psr-4": {
+            "lnky\\": "src"
+        }
     }
 }

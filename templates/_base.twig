@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>LNKY - Make More</title>
 	<style>
 		@import "css/main.css";
@@ -10,7 +12,11 @@
 	<script src="plugins/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-{% block content %}
-{% endblock %}
+	<div class="container">
+		{{ include("_nav.twig") }}
+
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>

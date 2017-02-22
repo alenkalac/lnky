@@ -26,7 +26,6 @@
 		    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
 		    $remote  = @$_SERVER['REMOTE_ADDR'];
 		    $result  = array('countryCode'=>'', 'countryName'=>'', 'city'=>'');
-		    
 		    if(filter_var($client, FILTER_VALIDATE_IP)){
 		        $ip = $client;
 		    }elseif(filter_var($forward, FILTER_VALIDATE_IP)){
@@ -35,10 +34,12 @@
 		        $ip = $remote;
 		    }
 
+		    //$ip = "86.44.141.86";
+
 		    $ip_data = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=".$ip));    
 		    if($ip_data && $ip_data->geoplugin_countryName != null){
 		        $result['countryCode'] = $ip_data->geoplugin_countryCode;
-		        $result['countryName'] = $ip_data->geoplugin_countryName;
+		         $result['countryName'] = $ip_data->geoplugin_countryName;
 		        $result['city'] = $ip_data->geoplugin_city;
 		    }
 		    return $result;

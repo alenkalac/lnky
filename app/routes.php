@@ -1,4 +1,4 @@
 <?php 
 	$app->get('/', 'lnky\MainController::indexPage')->bind("index");
 
-	$app->get('/{id}', 'lnky\MainController::redirectPage');
+	$app->get('/publisher', 'lnky\MainController::pubPage')->bind("publisher");

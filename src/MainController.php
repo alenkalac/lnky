@@ -21,6 +21,10 @@
 			//redirect
 		}
 
+		public function pubPage(Request $req, Application $app) {
+			return $app['twig']->render('publisher.twig', ["numdays" => date('t')]);
+		}
+
 		private function getLocationInfoByIp(){
 		    $client  = @$_SERVER['HTTP_CLIENT_IP'];
 		    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];

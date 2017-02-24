@@ -1,37 +1,84 @@
 {% extends "_base.twig" %}
 
 {% block content %}
-	<div class="row header">
-		<div class="col-md-12 header-item">
-			<div class="container-url">
-				<span class="tag-line">EARN MORE WITH <span>LNKY</span></span>
-				<div class=" d-flex justify-content-center">
-					<input class="field-url" type="text" name="url" placeholder="PASTE URL HERE">
-					<button class="field-submit">SHORTEN</button>
-				</div>
-			</div>
-		</div>
-	</div>
+	
+	{{ include("_shortbar.twig") }}
 
 	<div class="row sub-header">
 
 		<div class="col-md-3 sub-header-cta d-flex justify-content-center align-items-center">
-			<button class="btn btn-primary btn-lg">JOIN NOW!</button>
+			<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">JOIN NOW!</button>
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-6">
 			<p class="sub-header-tag">
 				Monitize Your Short Links <br>like a <span class="lnky">BOSS</span>
 			</p>
 		</div>
-		<div class="col-md-4 adb d-flex justify-content-center align-items-center">
+		<div class="col-md-3 adb d-flex justify-content-center align-items-center">
 			Prevent Adblockers and earn more
 		</div>
 	</div>
 
 	<div class="row how-to">
 		<div class="col-md-12">
-			<h2>How LNKY Works</h2>
+			<h2 class="how-to-tag">How <span class="lnky">LNKY</span> Works</h2>
+		</div>
+		<div class="col-md-12 how-to-intro hidden-md-down">
+			<div class="intro1">
+				User <strong>Clicks</strong><br>Your Link
+			</div>
+			<div class="intro2">
+				LNKY<strong> Determines</strong> where the click 
+				is coming <strong>from</strong> and redirect to 
+				the <strong>Highest Paying</strong> monitized 
+				service you are connected with
+			</div>
+			<div class="intro3">
+				User sees an AD<br>
+				You get <strong>PAID</strong>.
+			</div>
 		</div>
 	</div>
+
+	<div class="row services">
+		<div class="col-md-3 d-flex justify-content-center align-items-center">
+			<h2 class="services-tag">Services</h2>
+		</div>
+		<div class="col-md-9 d-flex justify-content-center align-items-center">
+			<img class="serv-adfly" src="img/adf.ly.png" alt="image of adfly logo">
+			<img class="serv-shortest" src="img/shortest.png" alt="image of shorte.st logo">
+			<img class="serv-linkshare" src="img/linkshare.png" alt="image of linkshrink logo">
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<script>
+
+	$(document).ready(function(){
+		$(".field-submit").click(function(e){
+			e.preventDefault();
+		});
+	});
+	</script>
 
 {% endblock %}

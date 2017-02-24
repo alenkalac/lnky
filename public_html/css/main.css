@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 
 body {
+	background: #e9fdfd;
 }
 
 .container {
@@ -21,21 +22,21 @@ body {
 }
 
 .navbar-brand:hover {
-	color: yellow !important;
+	color: #C1E1A6 !important;
+	text-decoration: underline;
 }
 
 .header {
 	padding: 25px 0;
 	padding-bottom: 40px;
+	background: #C1E1A6;
 }
 
 .header-item {
-	background: white;
 }
 
 .field-url, .field-submit{
 	border: none;
-	background: white;
 	padding: 10px;
 	font-size: 1.2em;
 	border: 1px solid black;
@@ -63,6 +64,10 @@ body {
 	
 }
 
+.url {
+	margin-bottom: 5px;
+}
+
 .tag-line {
 	width: 100%;
 	display: block;
@@ -77,8 +82,18 @@ body {
 	text-decoration: underline;
 }
 
+.lnky {
+	text-transform: uppercase;
+}
+
 .sub-header {
-	background: orange;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c1e1a6+27,ffffff+100 */
+background: #c1e1a6; /* Old browsers */
+background: -moz-linear-gradient(top,  #c1e1a6 27%, #ffffff 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #c1e1a6 27%,#ffffff 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #c1e1a6 27%,#ffffff 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1e1a6', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 }
 
 .sub-header-tag {
@@ -106,14 +121,85 @@ body {
 
 .adb {
 	background-image: url("/img/adb.png");
-	background-size: 250px 250px;
+	background-size: 240px 240px;
 	background-repeat: no-repeat;
 	background-position: center;
 
-	font-size: 2.2em;
+	font-size: 1.8em;
 	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
 
-	text-shadow: 2px 2px 2px red;
+	text-shadow: 1px 1px 2px white;
+}
+
+.choices label {
+	margin-right: 10px;
+}
+
+.how-to-tag {
+	text-align: center;
+	font-size: 2.8em;
+	font-weight: bold;
+	
+}
+
+.how-to {
+	background: white;
+	padding: 20px 0;
+}
+
+.how-to-intro {
+	background-image: url("/img/how1.png");
+	background-repeat: no-repeat;
+	background-position: center 10px;
+	padding-top: 155px;
+	padding-left: 160px;
+
+}
+
+.intro1, .intro2, .intro3 {
+	display: inline-block;
+	width: 240px;
+	vertical-align: top;
+	text-align: center;
+}
+
+.intro2 {
+	margin: 0 45px;
+}
+
+@media (max-width: 1200px) {
+	.how-to-intro {
+		padding-top: 155px;
+		padding-left: 70px;
+	}
+}
+
+.services-tag {
+	font-size: 2.8em;
+	color: white;
+	margin-bottom: 20px;
+}
+
+.services {
+	background: black;
+	padding: 25px 0;
+}
+
+.serv-adfly {
+	width: 100px;
+}
+
+.serv-shortest {
+	width: 170px;
+}
+
+.data {
+	background: white;
+}
+
+.data-chart {
+	height: 350px;
+	
 }

@@ -1,0 +1,79 @@
+{% extends "_base.twig" %}
+
+{% block scripts %}
+	<script src="js/canvasjs.min.js"></script>
+{% endblock %}
+
+{% block content %}
+	
+	{{ include("_shortbar.twig") }}
+
+	<div class="row data">
+		<div class="col-md-2"></div>
+		<div class="col-md-10">
+			<div id="data-chart" class="data-chart">
+				
+			</div>
+		</div>
+	</div>
+
+	{{ numdays }}
+
+	<script>
+		$(document).ready(function(){
+			var chart = new CanvasJS.Chart("data-chart",
+			{
+				title:{
+					text: "Earnings for this month"
+				},  
+	                        animationEnabled: true,  
+				axisY: {
+					title: "Views",
+					valueFormatString: "#0",
+					suffix: ""
+				},
+				data: [
+				{        
+					toolTipContent: "{y} Views",
+					type: "splineArea",
+					markerSize: 8,
+					color: "rgba(54,158,173,.7)",
+					dataPoints: [
+						{x: 1, y: 1},     
+						{x: 2, y: 2},
+	               		{x: 3, y: 6},
+	                  	{x: 4, y: 34},
+	                  	{x: 5, y: 32},
+	                  	{x: 6, y: 123},
+	                 	{x: 7, y: 33},
+	                  	{x: 8, y: 33},
+	                  	{x: 9, y: 21},
+	                  	{x: 10, y: 123},
+	                  	{x: 11, y: 221},
+	                  	{x: 12, y: 121},
+	                  	{x: 13, y: 214},
+	                  	{x: 14, y: 221},
+	                  	{x: 15, y: 321},
+	                  	{x: 16, y: 121},
+	                  	{x: 17, y: 221},
+	                  	{x: 18, y: 211},
+	                  	{x: 19, y: 241},
+	                  	{x: 20, y: 210},
+	                  	{x: 21, y: 211},
+	                  	{x: 22, y: 211},
+	                  	{x: 23, y: 241},
+	                  	{x: 24, y: 21},
+	                  	{x: 25, y: 211},
+	                  	{x: 26, y: 221},
+	                  	{x: 27, y: 21},
+	                  	{x: 28, y: 21}
+	                  
+					]
+				}             
+				]
+			});
+			chart.render();
+		});
+	</script>
+
+{% endblock %}

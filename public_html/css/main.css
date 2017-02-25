@@ -203,3 +203,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1e1a6', end
 	height: 350px;
 	
 }
+
+.signup {
+	background: white;
+	padding: 25px 0;
+}

@@ -1,0 +1,6 @@
+[Adblock Plus 2.0]
+! Title: Lnky Filter List
+! Expires: 5 days
+! Version: 1002
+@@||localhost^$document
+@@||adf.ly^$document

@@ -1,0 +1,72 @@
+{% extends "_base.twig" %}
+
+
+{% block content %}
+	<div class="signup row">
+		<div class="col-md-3"></div>
+		<div class="col-md-6">
+			<div class="card">
+		  		<h3 class="card-header bg-primary text-white">Sign Up</h3>
+		  		<form action="/signup" method="post">
+		  			<div class="card-block">	
+		  				<div class="col-md-12">
+
+		  					{% if error.bad_email is defined %}
+	  						<div class="form-group has-danger">
+	  						{% else %}
+	  						<div class="form-group">
+	  						{% endif %}
+
+	  							<label class="form-control-label" for="email">Email</label>
+	  							<input 
+	  								type="text" 
+	  								class="form-control" 
+	  								name="email" 
+	  								id="email"
+	  								value="{{ args.email|default('') }}"
+	  								placeholder="Email Address"
+	  								required="required" >
+	  						
+	  						{% if error.bad_email is defined %}
+	  						<div class="form-control-feedback">Invalid Email Address. Try Again</div>
+	  						{% endif %}
+	  						</div>
+		  				</div>
+		  				<div class="row">
+			  				<div class="col-md-6">
+			  					{% if error.bad_password is defined %}
+		  						<div class="form-group has-danger">
+		  						{% else %}
+		  						<div class="form-group">
+		  						{% endif %}
+			  						<label class="form-control-label" for="password">Password</label>
+			  						<input type="password" class="form-control" name="password" id="password" required="required" 
+			  						placeholder="Password">
+			  						{% if error.bad_password is defined %}
+	  								<div class="form-control-feedback">Bad Password, Try Again</div>
+	  								{% endif %}
+			  					</div>
+		  					</div>
+		  					<div class="col-md-6">
+		  						{% if error.bad_password is defined %}
+		  						<div class="form-group has-danger">
+		  						{% else %}
+		  						<div class="form-group">
+		  						{% endif %}
+			  						<label class="form-control-label" for="re-password">Re-Password</label>
+			  						<input type="password" class="form-control" name="re-password" id="re-password" required="required" placeholder="Re-Type Password">
+			  						{% if error.bad_password is defined %}
+	  								<div class="form-control-feedback">Bad Password, Try Again</div>
+	  								{% endif %}
+		  						</div>
+		  					</div>
+		  				</div>
+		  			</div>
+					<div class="card-footer text-muted clearfix">
+  						<input type="submit" value="Sign Up" class="btn btn-primary float-right">
+  					</div>
+	  			</form>
+				</div>
+			</div>
+		</div>
+{% endblock %}

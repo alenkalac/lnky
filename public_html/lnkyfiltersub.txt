@@ -1,0 +1,7 @@
+[Adblock Plus 2.0]
+! Checksum: fWae7L6qy2brC4hmnrAzbw
+! Title: Lnky Filter List
+! Expires: 5 days
+! Version: 1002
+@@||localhost^$document
+@@||adf.ly^$document

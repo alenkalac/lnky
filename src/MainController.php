@@ -3,6 +3,7 @@
 
 	use Silex\Application;
 	use Symfony\Component\HttpFoundation\Request;
+	use Symfony\Component\HttpFoundation\RedirectResponse;
 
 	class MainController {
 
@@ -23,6 +24,51 @@
 
 		public function pubPage(Request $req, Application $app) {
 			return $app['twig']->render('publisher.twig', ["numdays" => date('t')]);
+		}
+
+		public function signupProcess(Request $req, Application $app) {
+			$error = [];
+			$email = $req->get('email');
+			$pass1 = $req->get('password');
+			$pass2 = $req->get('re-password');
+
+			//TODO: VERIFY EMAIL VALIDITY
+			if(!$this->isValidEmail($email)) {
+				$error['bad_email'] = 1;
+			}
+
+			//TODO: VERIFY PASSWORDS FOR MATCH
+			if(strcmp($pass1, $pass2) != 0) {
+				$error['bad_password'] = 1;
+			}
+
+			if(!empty($error)) {
+				$args = [
+					'email' => $email,
+					'pass1' => $pass1,
+					'pass2' => $pass2,
+				];
+				return $app['twig']->render("signup.twig", ['args' => $args, 'error' => $error]);
+			}
+
+			$pass_hash = password_hash($pass1, PASSWORD_BCRYPT);
+
+			$query = $app['db']->prepare("INSERT INTO users VALUES(NULL, :EMAIL, :PASSWORD, 1)");
+			$query->execute([
+				"EMAIL" => $email,
+				"PASSWORD" => $pass_hash,
+			]);
+
+			return new RedirectResponse("/");
+
+		}
+
+		public function signupPage(Request $req, Application $app) {
+			return $app['twig']->render('signup.twig', ['signup' => 'active']);
+		}
+
+		private function isValidEmail($email) {
+			return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 		}
 
 		private function getLocationInfoByIp(){

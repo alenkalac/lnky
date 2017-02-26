@@ -1,8 +1,15 @@
 <?php 
-	$app->get('/', 'lnky\MainController::indexPage')->bind("index");
+	$app->get('/', getCtrlPath('MainController', 'indexPage'))->bind("index");
 
-	$app->get('/publisher', 'lnky\MainController::pubPage')->bind("publisher");
+	$app->get('/publisher', getCtrlPath('MainController', "pubPage"))->bind("publisher");
 
-	$app->get('/signup', 'lnky\MainController::signupPage')->bind("signup");
+	$app->get('/signup', getCtrlPath('MainController', "signupPage"))->bind("signup");
 
-	$app->post('/signup', 'lnky\MainController::signupProcess');
+	$app->post('/signup', getCtrlPath('MainController', "signupProcess"));
+
+	//clef 
+	$app->get('/clef/redirect', getCtrlPath('ClefController', "registerProcess"));
+
+	function getCtrlPath($class, $function) {
+		return "Lnky\Controller\\$class::$function";
+	}

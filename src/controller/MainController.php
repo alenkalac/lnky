@@ -1,13 +1,18 @@
 <?php 
-	namespace lnky;
+	namespace Lnky\Controller;
 
 	use Silex\Application;
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
+	use Symfony\Component\Security\Csrf\CsrfToken;
 
 	class MainController {
 
 		public function indexPage(Request $req, Application $app) {
+			//$app['csrf.token_manager']->generateCsrfToken('CSRF');
+			//$app['csrf.token_manager']->refreshToken('CSRF');
+			//PRINT_R($app['csrf.token_manager']->getToken('CSRF'));
+			//DIE();
 			return $app['twig']->render('index.twig', []);
 		}
 
@@ -23,6 +28,8 @@
 		}
 
 		public function pubPage(Request $req, Application $app) {
+			if($app['session']->get('user', 0) == 0)
+				return new RedirectResponse("/");
 			return $app['twig']->render('publisher.twig', ["numdays" => date('t')]);
 		}
 
@@ -31,6 +38,14 @@
 			$email = $req->get('email');
 			$pass1 = $req->get('password');
 			$pass2 = $req->get('re-password');
+			$token = $req->get('token_value');
+
+			//CHECK CSRF
+			$token_valid = $app['csrf.token_manager']->isTokenValid(new CsrfToken('SIGNUP_CSRF', $token));
+
+			if(!$token_valid) {
+				$error['bad_token'] = 1;
+			}
 
 			//TODO: VERIFY EMAIL VALIDITY
 			if(!$this->isValidEmail($email)) {
@@ -43,11 +58,15 @@
 			}
 
 			if(!empty($error)) {
+				$token_key = $app['csrf.token_manager']->refreshToken('SIGNUP_CSRF');
+				$app['session']->set('state', $token_key->getValue());
 				$args = [
 					'email' => $email,
 					'pass1' => $pass1,
 					'pass2' => $pass2,
+					'token' => $token_key->getValue(),
 				];
+
 				return $app['twig']->render("signup.twig", ['args' => $args, 'error' => $error]);
 			}
 
@@ -64,7 +83,13 @@
 		}
 
 		public function signupPage(Request $req, Application $app) {
-			return $app['twig']->render('signup.twig', ['signup' => 'active']);
+			$token_key = $app['csrf.token_manager']->refreshToken('SIGNUP_CSRF');
+			$app['session']->set('state', $token_key->getValue());
+			$args = [
+				'signup' => 'active',
+				'token' => $token_key->getValue(),
+			];
+			return $app['twig']->render('signup.twig', ['args' => $args]);
 		}
 
 		private function isValidEmail($email) {

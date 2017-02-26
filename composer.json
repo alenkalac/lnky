@@ -3,7 +3,9 @@
         "silex/silex": "^2.0",
         "twig/twig": "^1.31",
         "doctrine/dbal": "^2.5",
-        "twbs/bootstrap": "4.0.0-alpha.6"
+        "twbs/bootstrap": "4.0.0-alpha.6",
+        "symfony/security-csrf": "^3.2",
+        "clef/clef-php": "^1.0"
     },
     "scripts": {
     	"post-update-cmd": [
@@ -12,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "lnky\\": "src"
+            "Lnky\\": "src"
         }
     }
 }

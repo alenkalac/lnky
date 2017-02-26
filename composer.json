@@ -9,7 +9,8 @@
     },
     "scripts": {
     	"post-update-cmd": [
-    		"cp -R vendor/twbs/bootstrap/dist public_html/plugins/bootstrap"
+    		"cp -R vendor/twbs/bootstrap/dist public_html/plugins/bootstrap",
+            "rm -fr public_html/plugins/bootstrap/dist"
     	]
     },
     "autoload": {

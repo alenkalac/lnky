@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css?family=Abril+Fatface');
 
 body {
-	background: #e9fdfd;
+	background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNjY2MiPjwvcmVjdD4KPC9zdmc+");
 }
 
 .container {
@@ -19,6 +19,7 @@ body {
 .navbar-brand {
 	font-family: 'Abril Fatface', cursive;
 	font-size: 2em;
+	transition: color 0.2s ease-out;
 }
 
 .navbar-brand:hover {
@@ -180,6 +181,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1e1a6', end
 	font-size: 2.8em;
 	color: white;
 	margin-bottom: 20px;
+	text-transform: uppercase;
 }
 
 .services {

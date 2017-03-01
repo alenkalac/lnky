@@ -5,7 +5,12 @@
 
 	$app->get('/signup', getCtrlPath('MainController', "signupPage"))->bind("signup");
 
+	$app->get('/login', getCtrlPath('MainController', 'loginPage'))->bind('login');
+
+	$app->get('/logout', getCtrlPath('MainController', 'logoutProcess'))->bind('logout');
+
 	$app->post('/signup', getCtrlPath('MainController', "signupProcess"));
+	$app->post('/login', getCtrlPath('MainController', 'loginProcess'));
 
 	//clef 
 	$app->get('/clef/redirect', getCtrlPath('ClefController', "registerProcess"));

@@ -1,0 +1,76 @@
+{% extends "_base.twig" %}
+
+
+{% block content %}
+	<div class="signup row"> 
+		{% if error.bad_token is defined %}
+		<div class="col-md-12">
+			<div class="alert alert-danger">Invalid <strong>CSRF Token</strong>.</div>
+		</div>
+		{% endif %}
+		<div class="col-md-3">
+			<script 
+				type="text/javascript" 
+				src="https://clef.io/v3/clef.js" 
+				class="clef-button" 
+				data-app-id="cb86b4307c32f0e177fb66facfc68e9f" 
+				data-color="blue" 
+				data-style="button" 
+				data-redirect-url="http://localhost/clef/redirect" 
+				data-type="login">
+			</script>
+		</div>
+		<div class="col-md-6">
+			<div class="card">
+		  		<h3 class="card-header bg-primary text-white">Log In</h3>
+		  		<form action="/login" method="post">
+		  			<div class="card-block">	
+		  				<div class="col-md-12">
+
+		  					{% if error.bad_email is defined %}
+	  						<div class="form-group has-danger">
+	  						{% else %}
+	  						<div class="form-group">
+	  						{% endif %}
+
+	  							<label class="form-control-label" for="email">Email</label>
+	  							<input 
+	  								type="text" 
+	  								class="form-control" 
+	  								name="email" 
+	  								id="email"
+	  								value="{{ args.email|default('') }}"
+	  								placeholder="Email Address"
+	  								required="required" >
+	  						
+	  						{% if error.bad_email is defined %}
+	  						<div class="form-control-feedback">Invalid Email Address. Try Again</div>
+	  						{% endif %}
+	  						</div>
+		  				</div>
+		  				
+			  				<div class="col-md-12">
+			  					{% if error.bad_password is defined %}
+		  						<div class="form-group has-danger">
+		  						{% else %}
+		  						<div class="form-group">
+		  						{% endif %}
+			  						<label class="form-control-label" for="password">Password</label>
+			  						<input type="password" class="form-control" name="password" id="password" required="required" 
+			  						placeholder="Password">
+			  						<small class="form-text text-muted">6 Characters Long or more</small>
+			  						{% if error.bad_password is defined %}
+	  								<div class="form-control-feedback">Bad Password, Try Again</div>
+	  								{% endif %}
+			  					</div>
+		  					</div>
+		  			</div>
+					<div class="card-footer text-muted clearfix">
+  						<input type="submit" value="Log In" class="btn btn-primary float-right">
+  					</div>
+  					<input type="hidden" name="token_value" value="{{ args.token|default('') }}">
+	  			</form>
+				</div>
+			</div>
+		</div>
+{% endblock %}

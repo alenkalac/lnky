@@ -5,14 +5,13 @@
 	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\HttpFoundation\RedirectResponse;
 	use Symfony\Component\Security\Csrf\CsrfToken;
+	use Lnky\Model\User;
+	use PDO;
 
 	class MainController {
 
 		public function indexPage(Request $req, Application $app) {
-			//$app['csrf.token_manager']->generateCsrfToken('CSRF');
-			//$app['csrf.token_manager']->refreshToken('CSRF');
-			//PRINT_R($app['csrf.token_manager']->getToken('CSRF'));
-			//DIE();
+			
 			return $app['twig']->render('index.twig', []);
 		}
 
@@ -30,6 +29,7 @@
 		public function pubPage(Request $req, Application $app) {
 			if($app['session']->get('user', 0) == 0)
 				return new RedirectResponse("/");
+			
 			return $app['twig']->render('publisher.twig', ["numdays" => date('t')]);
 		}
 
@@ -72,7 +72,7 @@
 
 			$pass_hash = password_hash($pass1, PASSWORD_BCRYPT);
 
-			$query = $app['db']->prepare("INSERT INTO users VALUES(NULL, :EMAIL, :PASSWORD, 1)");
+			$query = $app['db']->prepare("INSERT INTO users VALUES(NULL, :EMAIL, '' ,:PASSWORD, 0, 1, 0,0,0,0)");
 			$query->execute([
 				"EMAIL" => $email,
 				"PASSWORD" => $pass_hash,
@@ -90,6 +90,49 @@
 				'token' => $token_key->getValue(),
 			];
 			return $app['twig']->render('signup.twig', ['args' => $args]);
+		}
+
+		public function loginProcess(Request $req, Application $app) {
+			$email = $req->get('email');
+			$pass = $req->get('password');
+			$token = $req->get('token_value');
+
+			$token_valid = $app['csrf.token_manager']->isTokenValid(new CsrfToken('LOGIN_CSRF', $token));
+
+			if(!$token_valid)
+				return new RedirectResponse('/login');
+
+			$query = $app['db']->prepare('SELECT * FROM users WHERE email = :EMAIL');
+			$query->execute(['EMAIL' => $email]);
+			$query->setFetchMode(PDO::FETCH_CLASS, 'Lnky\Model\User');
+			$user = $query->fetch();
+
+			if(!$user)
+				return new RedirectResponse('/login');
+
+			$pass_valid = $user->isPasswordValid($pass);
+
+			if(!$pass_valid)
+				return new RedirectResponse('/login');
+
+			$app['session']->set('user', $user->getId());
+			return new RedirectResponse("/publisher");
+		}
+
+		public function loginPage(Request $req, Application $app) {
+			$token_key = $app['csrf.token_manager']->refreshToken('LOGIN_CSRF');
+			$app['session']->set('state', $token_key->getValue());
+			$args = [
+				'login' => 'active',
+				'token' => $token_key->getValue(),
+			];
+
+			return $app['twig']->render('login.twig', ['args' => $args]);
+		}
+
+		public function logoutProcess(Request $req, Application $app) {
+			$app['session']->clear();
+			return new RedirectResponse('/');
 		}
 
 		private function isValidEmail($email) {

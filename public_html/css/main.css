@@ -74,60 +74,66 @@ body {
 	margin-bottom: 5px;
 }
 
-.adb-choice, .monitize-choice {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-right: 10px;
+.checkbox-round {
+	position: relative;
+   	display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  	display: -ms-flexbox;  /* TWEENER - IE 10 */
+  	display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  	display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
 }
 
-.choices {
-	margin-top: 15px;
+
+.checkbox-round input[type=checkbox] {
+	visibility: hidden;
 }
 
-.adb-choice span, .monitize-choice span {
-	margin-right: 10px;
-}
-
-.adb-slider, .monitize-slider {
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	-o-appearance: none;
-	background: #ddd;
+.checkbox-round label {
 	width: 4em;
 	height: 2em;
-	outline: 0;
+	background: #ddd;
 	position: relative;
-	cursor: pointer;
 	border-radius: 1em;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
+	
+	-webkit-transition: background 0.09s ease-in-out;
+	-moz-transition: background 0.09s ease-in-out;
+	-o-transition: background 0.09s ease-in-out;
+	transition: background 0.09s ease-in-out;
+
+	margin-bottom: 0;
 	box-shadow: 0px 2px 5px rgba(0,0,0,0.8) inset;
+	cursor: pointer;
 }
 
-.adb-slider:checked, .monitize-slider:checked {
+.checkbox-round label::before {
+	content: "";
+	display: block;
+	position: absolute;
+	background: #fff;
+	width: 2em;
+	height: 2em;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
+	-o-border-radius: 1em;
+	border-radius: 1em;
+	
+	-webkit-transform: scale(0.9);
+	-ms-transform: scale(0.9);
+	transform: scale(0.9);
+
+	left: 0;
+	transition: left 0.09s ease-in-out;
+}
+
+.checkbox-round input[type=checkbox]:checked + label {
 	background: green;
 }
 
-.adb-slider::before, .monitize-slider::before {
-	content: '';
-	display: inline-block;
-	position: absolute;
-	left: 0;
-	height: 2em;
-	width: 2em;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
-	background: white;
-	transform: scale(0.9);
-	transition: left 0.10s ease-in-out;
-	box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.55);
-}
-
-.adb-slider:checked::before, .monitize-slider:checked::before {
+.checkbox-round input[type=checkbox]:checked + label::before {
 	left: 2em;
 }
-
 
 .tag-line {
 	width: 100%;
@@ -192,10 +198,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c1e1a6', end
 	text-transform: uppercase;
 
 	text-shadow: 1px 1px 2px white;
-}
-
-.choices label {
-	margin-right: 10px;
 }
 
 .how-to-tag {

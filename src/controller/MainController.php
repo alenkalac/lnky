@@ -11,7 +11,6 @@
 	class MainController {
 
 		public function indexPage(Request $req, Application $app) {
-			//return $this->getNextShortURL("zz");
 			return $app['twig']->render('index.twig', []);
 		}
 

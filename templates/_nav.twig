@@ -6,23 +6,23 @@
 		<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<a class="navbar-brand lnky" href="/">LNKY</a>
+			<a class="navbar-brand lnky" href="/"><img src="/img/logo.png" alt="Lnky Logo"></a>
 
 			<div class="collapse navbar-collapse" id="navbarText">
 		    <ul class="navbar-nav ml-auto">
 		   	{% if app.session.get('user') %}
 				<li class="nav-item {{ args.publisher|default('') }}">
-					<a class="nav-link" href="/publisher">Account Page</a>
+					<a class="nav-link" href="{{ app.url_generator.generate('publisher') }}">Account Page</a>
 				</li>
 				<li class="nav-item {{ args.logout|default('') }}">
-					<a class="nav-link" href="/logout">Log Out</a>
+					<a class="nav-link" href="{{ app.url_generator.generate('logout') }}">Log Out</a>
 				</li>
 		    {% else %}
 		    	<li class="nav-item {{ args.login|default('') }}">
-					<a class="nav-link" href="/login">Log In</a>
+					<a class="nav-link" href="{{ app.url_generator.generate('login') }}">Log In</a>
 				</li>
 				<li class="nav-item {{ args.signup|default('') }}">
-					<a class="nav-link" href="/signup">Sign Up</a>
+					<a class="nav-link" href="{{ app.url_generator.generate('signup') }}">Sign Up</a>
 				</li>
 				
 		  	{% endif %}

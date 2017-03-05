@@ -1,5 +1,9 @@
 {% extends "_base.twig" %}
 
+{% block scripts %}
+	<script src="js/shorten.js"></script>
+{% endblock %}
+
 {% block content %}
 	
 	{{ include("_shortbar.twig") }}
@@ -72,13 +76,6 @@
 	  </div>
 	</div>
 
-	<script>
-
-	$(document).ready(function(){
-		$(".field-submit").click(function(e){
-			e.preventDefault();
-		});
-	});
-	</script>
+	
 
 {% endblock %}

@@ -20,6 +20,11 @@ body {
 	font-family: 'Abril Fatface', cursive;
 	font-size: 2em;
 	transition: color 0.2s ease-out;
+
+}
+
+.navbar-brand img {
+	width: 150px;
 }
 
 .navbar-brand:hover {
@@ -29,7 +34,7 @@ body {
 
 .header {
 	padding: 25px 0;
-	padding-bottom: 40px;
+	padding-bottom: 30px;
 	background: #C1E1A6;
 }
 
@@ -68,6 +73,61 @@ body {
 .url {
 	margin-bottom: 5px;
 }
+
+.adb-choice, .monitize-choice {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+}
+
+.choices {
+	margin-top: 15px;
+}
+
+.adb-choice span, .monitize-choice span {
+	margin-right: 10px;
+}
+
+.adb-slider, .monitize-slider {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	background: #ddd;
+	width: 4em;
+	height: 2em;
+	outline: 0;
+	position: relative;
+	cursor: pointer;
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	box-shadow: 0px 2px 5px rgba(0,0,0,0.8) inset;
+}
+
+.adb-slider:checked, .monitize-slider:checked {
+	background: green;
+}
+
+.adb-slider::before, .monitize-slider::before {
+	content: '';
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	height: 2em;
+	width: 2em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	background: white;
+	transform: scale(0.9);
+	transition: left 0.10s ease-in-out;
+	box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.55);
+}
+
+.adb-slider:checked::before, .monitize-slider:checked::before {
+	left: 2em;
+}
+
 
 .tag-line {
 	width: 100%;

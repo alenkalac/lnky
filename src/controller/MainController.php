@@ -11,25 +11,37 @@
 	class MainController {
 
 		public function indexPage(Request $req, Application $app) {
-			
+			//return $this->getNextShortURL("zz");
 			return $app['twig']->render('index.twig', []);
 		}
 
-		public function redirectPage(Request $req, Application $app) {
-			$id = $req->get('id');
-			print_r($this->getLocationInfoByIp());
-			die();
-			//die($this->getLocationInfoByIp());
+		public function testPage(Request $req, Application $app) {
+			
+			$r = $req->get('id');
 
-			//get IP
-			//detect country
-			//redirect
+			return $r;
+
+			//return $app['twig']->render('index.twig', []);
 		}
 
-		public function pubPage(Request $req, Application $app) {
+		public function redirectPage(Request $req, Application $app) {
+			$link = $req->get('link');
+			$ip = $this->getLocationInfoByIp();
+			
+			$query = $app['db']->prepare("SELECT * FROM links WHERE link = :LINK");
+			$query->execute([
+				'LINK' => $link,
+			]);
+
+			$result = $query->fetch(PDO::FETCH_ASSOC);
+			
+			return new RedirectResponse($result['real_url']);
+		}
+
+		public function publisherPage(Request $req, Application $app) {
 			if($app['session']->get('user', 0) == 0)
 				return new RedirectResponse("/");
-			
+
 			return $app['twig']->render('publisher.twig', ["numdays" => date('t')]);
 		}
 
@@ -84,7 +96,8 @@
 
 		public function signupPage(Request $req, Application $app) {
 			$token_key = $app['csrf.token_manager']->refreshToken('SIGNUP_CSRF');
-			$app['session']->set('state', $token_key->getValue());
+			$token_clef = $app['csrf.token_manager']->refreshToken('SIGNUP_CLEF_CSRF');
+			$app['session']->set('state', $token_clef->getValue());
 			$args = [
 				'signup' => 'active',
 				'token' => $token_key->getValue(),
@@ -99,8 +112,9 @@
 
 			$token_valid = $app['csrf.token_manager']->isTokenValid(new CsrfToken('LOGIN_CSRF', $token));
 
+
 			if(!$token_valid)
-				return new RedirectResponse('/login');
+				return new RedirectResponse($app['url_generator']->generate('login'));
 
 			$query = $app['db']->prepare('SELECT * FROM users WHERE email = :EMAIL');
 			$query->execute(['EMAIL' => $email]);
@@ -108,20 +122,22 @@
 			$user = $query->fetch();
 
 			if(!$user)
-				return new RedirectResponse('/login');
+				return new RedirectResponse($app['url_generator']->generate('login'));
 
 			$pass_valid = $user->isPasswordValid($pass);
 
 			if(!$pass_valid)
-				return new RedirectResponse('/login');
+				return new RedirectResponse($app['url_generator']->generate('login'));
 
 			$app['session']->set('user', $user->getId());
-			return new RedirectResponse("/publisher");
+			return new RedirectResponse($app['url_generator']->generate('publisher'));
 		}
 
 		public function loginPage(Request $req, Application $app) {
 			$token_key = $app['csrf.token_manager']->refreshToken('LOGIN_CSRF');
-			$app['session']->set('state', $token_key->getValue());
+			$token_clef = $app['csrf.token_manager']->refreshToken('SIGNUP_CLEF_CSRF');
+			$app['session']->set('state', $token_clef->getValue());
+
 			$args = [
 				'login' => 'active',
 				'token' => $token_key->getValue(),
@@ -162,7 +178,6 @@
 		    }
 		    return $result;
 		}
-
 	}
 
 ?>

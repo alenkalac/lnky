@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3307
--- Generation Time: Feb 26, 2017 at 04:07 PM
+-- Generation Time: Mar 03, 2017 at 08:46 AM
 -- Server version: 10.1.9-MariaDB-log
 -- PHP Version: 5.6.16
 
@@ -80,9 +80,11 @@ CREATE TABLE `domains` (
 --
 
 CREATE TABLE `links` (
-  `link` varchar(15) NOT NULL,
+  `id` int(11) NOT NULL,
+  `link` varchar(15) DEFAULT NULL,
   `user` int(11) NOT NULL,
   `real_url` text NOT NULL,
+  `adblocker` tinyint(1) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -139,8 +141,8 @@ CREATE TABLE `users` (
   `verified` tinyint(1) NOT NULL DEFAULT '0',
   `logout_time` int(20) NOT NULL,
   `until_pay` int(3) NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `banned` tinyint(1) NOT NULL DEFAULT '0'
+  `admin` tinyint(1) DEFAULT '0',
+  `banned` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -179,8 +181,12 @@ ALTER TABLE `domains`
 -- Indexes for table `links`
 --
 ALTER TABLE `links`
-  ADD PRIMARY KEY (`link`),
-  ADD KEY `user` (`user`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id_2` (`id`),
+  ADD UNIQUE KEY `link` (`link`),
+  ADD KEY `user` (`user`),
+  ADD KEY `link_2` (`link`),
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `pay_rates`
@@ -218,12 +224,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `api_keys`
 --
 ALTER TABLE `api_keys`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `click_details`
 --
 ALTER TABLE `click_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `links`
+--
+ALTER TABLE `links`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15021;
 --
 -- AUTO_INCREMENT for table `pay_rates`
 --
@@ -233,7 +244,7 @@ ALTER TABLE `pay_rates`
 -- AUTO_INCREMENT for table `short_links`
 --
 ALTER TABLE `short_links`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `site_settings`
 --
@@ -243,7 +254,7 @@ ALTER TABLE `site_settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- Constraints for dumped tables
 --
@@ -252,35 +263,35 @@ ALTER TABLE `users`
 -- Constraints for table `api_keys`
 --
 ALTER TABLE `api_keys`
-  ADD CONSTRAINT `domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`),
-  ADD CONSTRAINT `user_fk` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_fk` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `click_details`
 --
 ALTER TABLE `click_details`
-  ADD CONSTRAINT `click_country_fk` FOREIGN KEY (`country`) REFERENCES `countries` (`country`),
-  ADD CONSTRAINT `click_link_fk` FOREIGN KEY (`link`) REFERENCES `links` (`link`);
+  ADD CONSTRAINT `click_country_fk` FOREIGN KEY (`country`) REFERENCES `countries` (`country`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `click_link_fk` FOREIGN KEY (`link`) REFERENCES `links` (`link`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `links`
 --
 ALTER TABLE `links`
-  ADD CONSTRAINT `user_links_fk` FOREIGN KEY (`user`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `user_links_fk` FOREIGN KEY (`user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pay_rates`
 --
 ALTER TABLE `pay_rates`
-  ADD CONSTRAINT `pr_countries_fk` FOREIGN KEY (`country`) REFERENCES `countries` (`country`),
-  ADD CONSTRAINT `pr_domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`);
+  ADD CONSTRAINT `pr_countries_fk` FOREIGN KEY (`country`) REFERENCES `countries` (`country`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `pr_domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `short_links`
 --
 ALTER TABLE `short_links`
-  ADD CONSTRAINT `short_link_domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`),
-  ADD CONSTRAINT `short_link_link_fk` FOREIGN KEY (`link`) REFERENCES `links` (`link`);
+  ADD CONSTRAINT `short_link_domain_fk` FOREIGN KEY (`domain`) REFERENCES `domains` (`domain`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `short_link_link_fk` FOREIGN KEY (`link`) REFERENCES `links` (`link`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

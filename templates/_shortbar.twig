@@ -2,18 +2,18 @@
 	<div class="col-md-12 header-item">
 		<div class="container-url">
 			<h2 class="tag-line">EARN MORE WITH <span>LNKY</span></h2>
-			<form class="url d-flex justify-content-center">
+			<form id="shortenForm" class="url d-flex justify-content-center">
 				<input class="field-url" type="text" name="u" placeholder="PASTE URL HERE">
-				<button id="field-submit" class="field-submit" data-toggle="modal" data-target="#myModal">SHORTEN</button>
+				<input type="submit" id="field-submit-2" class="field-submit" data-toggle="modal" data-target="#myModal--" value="SHORTEN">
 			</form>
 			<div class="choices d-flex justify-content-center">
-				<label for="adb">
-					<input type="checkbox" id="adb" name="adb"> Disable Adblock 
-				</label>
+				<div class="adb-choice">
+					<span>Disable Adblock</span><input type="checkbox" id="adb" class="adb-slider" name="adb">  
+				</div>
 
-				<label for="monitize">
-					<input type="checkbox" id="monitize" name="monitize" checked="checked"> Monitize Link 
-				</label>
+				<div class="monitize-choice">
+					<span>Monitize Link</span><input type="checkbox" id="monitize" class="monitize-slider" name="monitize" checked="checked"> 
+				</div>
 			</div>
 		</div>
 	</div>

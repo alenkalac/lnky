@@ -11,7 +11,7 @@ class ClefController {
 		\Clef\Clef::initialize(CLEF_APP, CLEF_SECRET);
 		
 		$code = $req->get('code');
-		$CSRF = $app['csrf.token_manager']->getToken("SIGNUP_CSRF");
+		$CSRF = $app['csrf.token_manager']->getToken("SIGNUP_CLEF_CSRF");
 		$state = $CSRF->getValue();
 
 		$this->validate_state($app, $state);
@@ -28,11 +28,10 @@ class ClefController {
 			$app['session']->set('user', $user['id']);
 
 		} catch (Exception $e) {
-		  // An error occurred while trying to get user information
-		  echo "Login with Clef failed: " . $e->getMessage();
+		  	return new RedirectResponse('/');
 		}
 		finally {
-			return new RedirectResponse("/publisher");
+			return new RedirectResponse($app['url_generator']->generate('publisher'));
 		}
 	}
 
